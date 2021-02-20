@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+  name: trissect-frontend
+  namespace: trissect
+spec:
+  rules:
+  - host: trissect.tuuturu.org
+    http:
+      paths:
+      - backend:
+          serviceName: trissect-frontend
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - trissect.tuuturu.org
+    secretName: trissect-frontend-tls
+

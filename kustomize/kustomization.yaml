@@ -1,2 +1,4 @@
 resources:
-  - trissect.yaml
+  - service.yaml
+  - ingress.yaml
+  - deployment.yaml
