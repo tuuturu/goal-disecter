@@ -14,5 +14,5 @@ spec:
         app: trissect-frontend
     spec:
       containers:
-        - image: docker.pkg.github.com/tuuturu/trissect/trissect:0.0.2
+        - image: docker.pkg.github.com/tuuturu/trissect/trissect:0.0.5
           name: trissect-frontend
