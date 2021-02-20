@@ -5,7 +5,7 @@
 
     <GoalList :goals="subgoals" />
     <div class="goal-actions">
-      <button class="secondary">Dissect</button>
+      <button v-if="subgoals.length === 0" class="secondary">Dissect</button>
     </div>
   </div>
 </template>
