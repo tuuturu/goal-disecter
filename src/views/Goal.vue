@@ -4,9 +4,15 @@
     <p>{{ goal.reasoning }}</p>
 
     <GoalList :goals="subgoals" />
-    <div class="goal-actions">
-      <button v-if="subgoals.length === 0" class="secondary">Dissect</button>
-      <button v-else class="secondary">Add subgoal</button>
+
+    <div class="goal-actions" v-show="!showSubgoalAdder">
+      <button class="secondary" @click="showSubgoalAdder = true">
+        <span v-if="subgoals.length === 0">Dissect</span>
+        <span v-else>Add subgoal</span>
+      </button>
+    </div>
+    <div class="" v-show="showSubgoalAdder">
+      <input placeholder="Add something" />
     </div>
   </div>
 </template>
@@ -25,6 +31,9 @@ export default {
       return this.$store.getters['goals/subgoals'](this.$route.params.id)
     }
   },
+  data: () => ({
+    showSubgoalAdder: false
+  }),
   async created() {
     await this.$store.dispatch('goals/refresh')
   }
