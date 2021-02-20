@@ -6,6 +6,7 @@
     <GoalList :goals="subgoals" />
     <div class="goal-actions">
       <button v-if="subgoals.length === 0" class="secondary">Dissect</button>
+      <button v-else class="secondary">Add subgoal</button>
     </div>
   </div>
 </template>
