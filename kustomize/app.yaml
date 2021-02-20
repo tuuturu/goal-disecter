@@ -1,0 +1,32 @@
+## Oslo Kommune Kaex template
+# A name that identifies your app
+name: trissect-frontend
+# An URI for your app Docker image
+image: docker.pkg.github.com/tuuturu/trissect/trissect
+# The version of your app which is available as an image
+version: 0.0.2
+
+# The URL your app should be available on
+# Change to something other than https to disable configuring TLS
+# Comment this out to avoid setting up an ingress
+url: https://trissect.tuuturu.org
+
+# The port your app listens on
+# Comment this out to avoid setting up a service (required if url is specified)
+port: 80
+
+# How many replicas of your application should we scaffold
+#replicas: 3 # 1 by default
+
+# A namespace where your app will live
+namespace: trissect
+
+# The environment your app requires
+#environment:
+#  MY_VARIABLE: my-value
+
+# Annotations for your ingress
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+
