@@ -61,9 +61,7 @@ jobs:
       - run: git reset HEAD~1 # Needed for commit version bump to find the changes for some reason
 
       - run: |
-          yq -iy \
-          --arg newImage docker.pkg.github.com/tuuturu/trissect/trissect:${{ steps.bump_version.outputs.new_version }} \
-          '.spec.template.spec.containers[0].image = $newImage' \
+          sed 's~docker.pkg.github.com/tuuturu/trissect/trissect:.*~docker.pkg.github.com/tuuturu/trissect/trissect:${{ steps.bump_version.outputs.new_version }}~' \
           kustomize/deployment.yaml
 
       - name: Commit version bump
