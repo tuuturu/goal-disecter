@@ -1,6 +1,9 @@
 <template>
   <div class="Home">
-    <input aria-label="new goal input" placeholder="What do you want?" />
+    <div class="input-container">
+      <span>I want to</span>
+      <input aria-label="new goal input" placeholder="to add a goal" />
+    </div>
 
     <GoalList :goals="goals" />
   </div>
@@ -33,8 +36,23 @@ export default {
   align-items: center;
 }
 
+.input-container {
+  width: 30%;
+
+  display: flex;
+  align-items: center;
+
+  span {
+    width: 124px;
+
+    font-weight: bold;
+  }
+}
+
 input {
-  width: 25%;
+  display: inline;
+
+  width: 100%;
   padding: 1em;
 }
 
