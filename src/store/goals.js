@@ -50,6 +50,15 @@ const actions = {
     console.log('updating: ', updatedGoal)
     
     commit('goal', updatedGoal)
+  },
+  async markComplete({ commit, dispatch, getters }, goalID) {
+    getters.subgoals(goalID).forEach(subgoal => subgoal.complete = true)
+    
+    const goal = getters.goal(goalID)
+
+    goal.complete = true
+    
+    await dispatch('update', goal)
   }
 }
 

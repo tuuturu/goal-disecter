@@ -6,6 +6,12 @@
     </div>
 
     <GoalList :goals="goals" />
+
+    <div class="completed-goals" v-show="completedGoals.length > 0">
+      <h2>Complete</h2>
+
+      <GoalList :goals="completedGoals" />
+    </div>
   </div>
 </template>
 
@@ -19,8 +25,11 @@ export default {
   components: { GoalList },
   computed: {
     goals() {
-      return this.$store.getters['goals/topLevelGoals']
-    }
+      return this.$store.getters['goals/topLevelGoals'].filter(goal => !goal.complete)
+    },
+    completedGoals() {
+      return this.$store.getters['goals/topLevelGoals'].filter(goal => goal.complete)
+    },
   },
   created() {
     this.$store.dispatch('goals/refresh')
@@ -47,8 +56,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/theme';
+
 .Home {
-  margin-top: 1em;
+  padding: $default-spacing;
 
   display: flex;
   flex-direction: column;
@@ -77,6 +88,10 @@ input {
 }
 
 .GoalList {
-  width: 50%;
+  width: 100%;
+}
+
+.completed-goals {
+  width: 100%;
 }
 </style>
