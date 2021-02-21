@@ -17,8 +17,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/theme';
+
 .GoalListItem {
-  border: 1px solid black;
+  border: $default-border-size solid $primary-color;
+  border-radius: $default-radius;
+
+  background: $secondary-background-color;
 
   cursor: pointer;
 }

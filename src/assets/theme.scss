@@ -1,6 +1,51 @@
-$primary-background-color: #FFFFFF;
+// Color palette: https://coolors.co/f8fff4-31081f-6b0f1a-32908f-183642
 
-$primary-color: #000000;
+$primary-background-color: #F8FFF4;
+$secondary-background-color: #32908F;
+
+$primary-text-color: #31081F;
+
+$primary-color: #183642;
 
 $default-radius: 4px;
 $default-border-size: 2px;
+
+$default-padding: 1em;
+$default-margin: 1em;
+
+// Form inputs
+input {
+  background-color: $primary-background-color;
+
+  border: $default-border-size solid $primary-color;
+  border-radius: $default-radius;
+
+  padding: 1em;
+}
+
+// Buttons
+button.primary {
+  background: $primary-color;
+
+  border: $default-border-size solid $primary-color;
+  border-radius: $default-radius;
+
+  color: $primary-background-color;
+}
+
+button.primary:hover {
+  background: $primary-background-color;
+  color: $primary-color;
+}
+
+button.secondary {
+  background: $primary-background-color;
+  border: 0;
+}
+
+button.secondary:hover {
+  outline: $primary-color solid $default-border-size;
+
+  -moz-outline-radius: $default-radius;
+}
+

@@ -1,3 +1,6 @@
+import { v4 as uuidv4 } from 'uuid' // TODO: Remove dep when backend is online
+
+import models from '~/models'
 
 const state = () => ({
   goals: [],
@@ -6,7 +9,10 @@ const state = () => ({
 const mutations = {
   goals(state, newGoals) {
     state.goals = newGoals
-  }
+  },
+  goal(state, newGoal) {
+    state.goals.push(newGoal)
+  },
 }
 
 const getters = {
@@ -19,13 +25,22 @@ const getters = {
     return state.goals.filter(goal => goal.parent === id)
   },
   topLevelGoals: state => {
-    return state.goals.filter(goal => goal.parent === "")
+    return state.goals.filter(goal => !goal.parent)
   }
 }
 
 const actions = {
-  async refresh({ commit }) {
-    commit('goals', createMockGoals())
+  async refresh({ commit, state }) {
+    if (state.goals.length > 0) return
+
+    const goals = createMockGoals().map(rawGoal => new models.Goal(rawGoal))
+    
+    commit('goals', goals)
+  },
+  async add({ commit }, goal) {
+    goal.id = uuidv4()
+
+    commit('goal', goal)
   }
 }
 
@@ -47,7 +62,7 @@ function findGoalIndexByID(goals, id) {
 function createMockGoals() {
   return [
     {
-      parent: "",
+      parent: null,
       id: "ecca9e55-c0f4-42c4-b287-4388b25a2066",
       title: "Kjøpe hus/leilighet",
       reasoning: "Har lyst på et sted jeg kan fikle med ting, blandt annet gitar",
