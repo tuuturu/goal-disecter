@@ -11,6 +11,10 @@ const mutations = {
     state.goals = newGoals
   },
   goal(state, newGoal) {
+    const index = findGoalIndexByID(state.goals, newGoal.id)
+
+    if (index !== -1) state.goals.splice(index, 1)
+
     state.goals.push(newGoal)
   },
 }
@@ -41,6 +45,11 @@ const actions = {
     goal.id = uuidv4()
 
     commit('goal', goal)
+  },
+  async update({ commit }, updatedGoal) {
+    console.log('updating: ', updatedGoal)
+    
+    commit('goal', updatedGoal)
   }
 }
 

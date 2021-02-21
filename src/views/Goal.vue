@@ -1,7 +1,23 @@
 <template>
   <div class="Goal">
-    <h1>{{ goal.title }}</h1>
-    <p>{{ goal.reasoning }}</p>
+    <h1
+        id="title"
+        :class="{ 'pre-editable': !editable.title, editable: editable.title }"
+        @click="edit"
+        @focusout="save"
+        @keypress.enter="blur"
+    >
+      {{ goal.title }}
+    </h1>
+    <p
+        id="reasoning"
+        :class="{ 'pre-editable': !editable.reasoning, editable: editable.reasoning }"
+        @click="edit"
+        @focusout="save"
+        @keypress.enter="blur"
+    >
+      {{ goal.reasoning }}
+    </p>
 
     <GoalList :goals="subgoals" />
 
@@ -41,7 +57,11 @@ export default {
     }
   },
   data: () => ({
-    showSubgoalAdder: false
+    showSubgoalAdder: false,
+    editable: {
+      title: false,
+      reasoning: false,
+    }
   }),
   async created() {
     await this.$store.dispatch('goals/refresh')
@@ -49,6 +69,33 @@ export default {
   methods: {
     range: function*(start, end) {
       for (let i = start; i < end; i++) yield i
+    },
+    blur() {
+      document.activeElement.blur()
+    },
+    edit(event) {
+      if (event.target.id === 'title') this.editable.title = true
+      else if (event.target.id === 'reasoning') this.editable.reasoning = true
+
+      event.target.contentEditable = true
+
+      event.target.focus()
+    },
+    save(event) {
+      if (event.target.id === 'title') {
+        this.editable.title = false
+
+        this.goal.title = event.target.innerText
+      }
+      else if (event.target.id === 'reasoning') {
+        this.editable.reasoning = false
+
+        this.goal.reasoning = event.target.innerText
+      }
+
+      event.target.contentEditable = false
+
+      this.$store.dispatch('goals/update', this.goal)
     },
     async addSubgoal(event) {
       const goal = new models.Goal({
@@ -63,7 +110,7 @@ export default {
 
       await this.$store.dispatch('goals/add', goal)
 
-      event.target.remove()
+      event.target.parentElement.remove()
 
       if (this.subgoals.length === 3) this.showSubgoalAdder = false
     }
@@ -75,6 +122,7 @@ export default {
 @import 'src/assets/theme';
 
 .Goal {
+  margin: 1em;
   padding: 0 $default-padding;
 
   display: flex;
@@ -83,15 +131,12 @@ export default {
   align-items: center;
 }
 
-.GoalList {
-  width: 100%;
+h1 {
+  margin: 0;
 }
 
-button {
-  padding: 1em 2em;
-
-  border-width: $default-border-size;
-  border-radius: $default-radius;
+.GoalList {
+  width: 100%;
 }
 
 .goal-dissecter {
@@ -99,5 +144,17 @@ button {
   flex-direction: column;
 
   width: 25%;
+}
+
+.pre-editable {
+  cursor: pointer;
+}
+
+.editable {
+  padding: $default-padding;
+
+  background: white;
+  border: $default-border-size solid $primary-color;
+  border-radius: $default-radius;
 }
 </style>

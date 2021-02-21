@@ -24,6 +24,13 @@ input {
 }
 
 // Buttons
+button {
+  padding: 1em 2em;
+
+  border-width: $default-border-size;
+  border-radius: $default-radius;
+}
+
 button.primary {
   background: $primary-color;
 
